@@ -1,3 +1,14 @@
+# YanBot-Sense_Grounded_SAM_2
+YanBot-Sense_Grounded_SAM_2, standalone repo for YanBot-Sense. Modified and supported for ROS1-Noetic. 
+
+```bash
+# ROS-Noetic install on Ubuntu22.04
+bash ros/install_deps.sh
+# Damn VPN
+export HF_ENDPOINT="https://hf-mirror.com"
+```
+
+
 # Grounded SAM 2: Ground and Track Anything in Videos
 
 **[IDEA-Research](https://github.com/idea-research)**

@@ -145,3 +145,7 @@ dmypy.json
 outputs/
 
 .idea/
+
+# result
+tracking_results/
+*.mp4
