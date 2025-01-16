@@ -12,5 +12,7 @@ apt-get update && apt-get install -y sudo
 check_success
 echo "deb [trusted=yes arch=amd64] http://deb.repo.autolabor.com.cn jammy main" | sudo tee /etc/apt/sources.list.d/autolabor.list
 check_success
+sudo apt-get update
+check_success
 sudo apt install ros-noetic-autolabor
 check_success

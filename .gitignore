@@ -10,6 +10,9 @@ _C.*
 outputs/*
 checkpoints/*.pt
 *test*
+AUTOMODEL/
+AUTOPRECESSOR/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

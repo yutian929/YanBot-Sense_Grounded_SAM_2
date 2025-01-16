@@ -23,24 +23,31 @@ if torch.cuda.get_device_properties(0).major >= 8:
     torch.backends.cudnn.allow_tf32 = True
 
 # init sam image predictor and video predictor model
-sam2_checkpoint = "./checkpoints/sam2.1_hiera_large.pt"
-model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
+sam2_checkpoint = "./checkpoints/sam2.1_hiera_tiny.pt"
+model_cfg = "configs/sam2.1/sam2.1_hiera_t.yaml"
 
 video_predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint)
 sam2_image_model = build_sam2(model_cfg, sam2_checkpoint)
 image_predictor = SAM2ImagePredictor(sam2_image_model)
 
 
-# init grounding dino model from huggingface
-model_id = "IDEA-Research/grounding-dino-tiny"
+# init grounding dino model from huggingface or locally
+default_processor = "./AUTOPRECESSOR"
+default_grounding_model = "./AUTOMODEL"
+if os.path.exists(default_processor) and os.path.exists(default_grounding_model):
+    print(f"Find processer and model locally.")
+else:
+    print(f"Didn't find {default_processor} and {default_grounding_model}, will download from hf. ")
+    default_processor = default_grounding_model = "IDEA-Research/grounding-dino-tiny"
 device = "cuda" if torch.cuda.is_available() else "cpu"
-processor = AutoProcessor.from_pretrained(model_id)
-grounding_model = AutoModelForZeroShotObjectDetection.from_pretrained(model_id).to(device)
-
+processor = AutoProcessor.from_pretrained(default_processor)
+grounding_model = AutoModelForZeroShotObjectDetection.from_pretrained(default_grounding_model).to(device)
+# processor.save_pretrained("./AUTOPRECESSOR")
+# grounding_model.save_pretrained("./AUTOMODEL")
 
 # setup the input image and text prompt for SAM 2 and Grounding DINO
 # VERY important: text queries need to be lowercased + end with a dot
-text = "child. bed. pillow."
+text = "child."
 
 # `video_dir` a directory of JPEG frames with filenames like `<frame_index>.jpg`  
 
