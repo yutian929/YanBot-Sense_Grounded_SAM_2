@@ -52,6 +52,7 @@ if torch.cuda.get_device_properties(0).major >= 8:
 # build SAM2 image predictor
 sam2_checkpoint = SAM2_CHECKPOINT
 model_cfg = SAM2_MODEL_CONFIG
+
 sam2_model = build_sam2(model_cfg, sam2_checkpoint, device=DEVICE)
 sam2_predictor = SAM2ImagePredictor(sam2_model)
 

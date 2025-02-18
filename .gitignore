@@ -152,3 +152,7 @@ outputs/
 # result
 tracking_results/
 *.mp4
+
+# yanbot
+yanbot_ws/checkpoints/
+yanbot_ws/devel/
