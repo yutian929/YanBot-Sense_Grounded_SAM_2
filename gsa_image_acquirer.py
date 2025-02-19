@@ -4,7 +4,7 @@ import numpy as np
 import os
 import time
 
-class ImageProcessor:
+class ImageAcquirer:
     def __init__(self, watch_dir='/tmp/file_pipe', flag_file='image.flag'):
         self.watch_dir = watch_dir  # 监视的图像目录
         self.flag_file = os.path.join(self.watch_dir, flag_file)  # 标志文件路径
@@ -28,6 +28,7 @@ class ImageProcessor:
             print(f"Failed to load image from {image_path}")
             return
         return img
+    
     def process_image(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         cv2.imwrite("gray.png", gray)
@@ -94,7 +95,7 @@ class ImageProcessor:
             # time.sleep(1)  # 每秒钟检查一次
 
 if __name__ == '__main__':
-    processor = ImageProcessor()
+    processor = ImageAcquirer()
     processor.watch_directory()
 
 

@@ -13,7 +13,7 @@ from PIL import Image
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection 
-from gsa_file_consumer import ImageProcessor ###
+from perception.grounded_sam2.gsa_image_acquirer import ImageProcessor ###
 
 """
 Hyper parameters
