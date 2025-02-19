@@ -5,9 +5,9 @@ import os
 import time
 
 class ImageProcessor:
-    def __init__(self):
-        self.watch_dir = '/tmp/file_pipe'  # 监视的图像目录
-        self.flag_file = os.path.join(self.watch_dir, 'image.flag')  # 标志文件路径
+    def __init__(self, watch_dir='/tmp/file_pipe', flag_file='image.flag'):
+        self.watch_dir = watch_dir  # 监视的图像目录
+        self.flag_file = os.path.join(self.watch_dir, flag_file)  # 标志文件路径
         self.last_image_time = 0
 
     def check_flag(self):
@@ -33,6 +33,32 @@ class ImageProcessor:
         cv2.imwrite("gray.png", gray)
         time.sleep(1)
         print(f"Processed image saved as gray.png.")
+    
+    def getting_image(self):
+        while True:
+            # 1. 确保主机端不在写入
+            while True:
+                flag_status = self.check_flag()
+                if flag_status == 'writing' or flag_status == 'read':  # 如果主机在写入或读取过了，等待
+                    print("writing / read")
+                    continue
+                elif flag_status == 'writed':  # 可以开始读取
+                    self.set_flag('reading')  # 设置为读取状态
+                    print("reading")
+                    break
+                else:
+                    self.set_flag("read")  # 重新开始
+                    print("restart")
+
+            image_path = os.path.join(self.watch_dir, 'latest_image.jpg')
+            
+            if os.path.exists(image_path):
+                img = self.read_image(image_path)
+
+                return image_path, img
+            
+    def after_getting_image(self):
+        self.set_flag('read')
 
     def watch_directory(self):
         while True:
