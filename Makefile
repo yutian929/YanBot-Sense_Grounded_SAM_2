@@ -30,10 +30,14 @@ build-image:
 	-t grounded_sam2:1.0 .
 run:
 	docker run --gpus all -it --net=host --privileged \
-	-v /tmp/.X11-unix:/tmp/.X11-unix \
-	-v "${PWD}":/home/appuser/Grounded-SAM-2 \
-	-e DISPLAY=$DISPLAY \
-	-e ROS_MASTER_URI=http://localhost:11311 \
-	-e ROS_IP=$(shell hostname -I | awk '{print $$1}') \
-	--name=gsa \
-	--ipc=host -it grounded_sam2:1.0
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v "${PWD}":/home/appuser/Grounded-SAM-2 \
+    -v /tmp/fifo_pipe:/tmp/fifo_pipe \
+	-v /tmp/file_pipe:/tmp/file_pipe \
+    -e DISPLAY=$DISPLAY \
+    -e ROS_MASTER_URI=http://localhost:11311 \
+    -e ROS_IP=$(shell hostname -I | awk '{print $$1}') \
+    --name=gsa4 \
+    --ipc=host -it grounded_sam2:1.0
+	-p 7777:7777 
+	-p 7778:7778

@@ -14,19 +14,19 @@ check_success
 apt-get install -y sudo
 check_success
 
-echo "deb [trusted=yes arch=amd64] http://deb.repo.autolabor.com.cn jammy main" | sudo tee /etc/apt/sources.list.d/autolabor.list
-check_success
+# echo "deb [trusted=yes arch=amd64] http://deb.repo.autolabor.com.cn jammy main" | sudo tee /etc/apt/sources.list.d/autolabor.list
+# check_success
 
-cd /
+# cd /
 
-sudo apt-get update
-sudo apt-get install ros-noetic-autolabor
-check_success
+# sudo apt-get update
+# sudo apt-get install ros-noetic-autolabor
+# check_success
 
-pip3 install catkin_pkg
-check_success
-pip3 install rospkg
-check_success
+# pip3 install catkin_pkg
+# check_success
+# pip3 install rospkg
+# check_success
 
 
 echo "Installation completed successfully!"
