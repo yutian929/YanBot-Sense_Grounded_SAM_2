@@ -13,7 +13,6 @@ from PIL import Image
 from sam2.build_sam import build_sam2
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection 
-from perception.grounded_sam2.gsa_image_acquirer import ImageProcessor ###
 
 """
 Hyper parameters
@@ -37,7 +36,6 @@ SAM2_MODEL_CONFIG = args.sam2_model_config
 DEVICE = "cuda" if torch.cuda.is_available() and not args.force_cpu else "cpu"
 OUTPUT_DIR = Path(args.output_dir)
 DUMP_JSON_RESULTS = not args.no_dump_json
-image_acquirer = ImageProcessor()  ###
 
 # create output directory
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -68,9 +66,7 @@ grounding_model = AutoModelForZeroShotObjectDetection.from_pretrained(model_id).
 # VERY important: text queries need to be lowercased + end with a dot
 text = TEXT_PROMPT
 img_path = IMG_PATH
-img_path, img_from_ia = image_acquirer.getting_image()  ###
 image = Image.open(img_path)
-image_acquirer.after_getting_image()  ###
 
 sam2_predictor.set_image(np.array(image.convert("RGB")))
 
@@ -133,7 +129,6 @@ labels = [
 Visualize image with supervision useful API
 """
 img = cv2.imread(img_path)
-img = img_from_ia  ###
 detections = sv.Detections(
     xyxy=input_boxes,  # (n, 4)
     mask=masks.astype(bool),  # (n, h, w)

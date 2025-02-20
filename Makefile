@@ -37,7 +37,7 @@ run:
     -e DISPLAY=$DISPLAY \
     -e ROS_MASTER_URI=http://localhost:11311 \
     -e ROS_IP=$(shell hostname -I | awk '{print $$1}') \
-    --name=gsa4 \
+    --name=gsa \
     --ipc=host -it grounded_sam2:1.0
 	-p 7777:7777 
 	-p 7778:7778
